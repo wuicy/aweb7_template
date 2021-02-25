@@ -1,0 +1,103 @@
+server:
+  port: 8066
+  servlet: 
+    context-path: /aweb-api
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: aweb
+  datasource:
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3306/aweb_background?userUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+      username: root
+      password: 123456
+      initial-size: 1
+      max-active: 100
+      max-open-prepared-statements: 50
+      max-pool-prepared-statement-per-connection-size: 20
+      max-wait: 60000
+      min-evictable-idle-time-millis: 300000
+      min-idle: 1
+      pool-prepared-statements: true
+      test-on-borrow: false
+      test-on-return: false
+      test-while-idle: true
+      time-between-eviction-runs-millis: 60000
+      validation-query: select 'x'
+    name: druidDatasource
+    type: com.alibaba.druid.pool.DruidDataSource
+#    data:
+#    - classpath*:sql/mysql/data.sql
+    initialization-mode: always
+    sql-script-encoding: UTF-8
+  jpa:
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: cn.com.agree.aweb.common.hibernate.UpperPhysicalNamingStrategy
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL55Dialect
+    show-sql: true
+swagger:
+  title: AWEB APIs
+  version: 1.0
+  authorization:
+    key-name: X-CSRF-TOKEN
+
+#文件上传路径
+uploadPath: D:/Temp/upload
+
+logging:
+  config: classpath:logback-spring.xml
+
+##获取设备信息url
+url:
+  #外设云服务（管理相关数据）
+  management: http://10.8.6.4:5101/client/
+  #调用外设服务
+  call_device: http://10.8.6.4:30000/
+  #aweb提供的服务(本例子调用其导出pdf)
+  aweb_api: http://localhost:8067/aweb-api/
+device:
+  #保存pdf的地址
+  save_pdf_path: G:\0000_01_code_project\02_AWEB_Spring\test
+  #保存pdf的文件名
+  save_pdf_name: test1.pdf
+afasdk:
+  #注册中心类型（zookeeper，eureka），ip，端口
+  register:
+    type: eureka
+    ip: 192.9.210.112
+    port: 19667
+  #配置中心ip，端口（类型目前默认zookeeper）
+  configuration:
+    ip: 10.8.4.210
+    port: 2181
+  #连接超出时间ms(默认3000)
+#  timeOut: 3000
+  #服务码
+  serviceCode: poc
+  #服务版本
+  serviceVersion: 1.0.0
+  #场景码
+  sceneCode: test
+  #场景版本
+  sceneVersion: 1.0.0
+
+#sftp配置
+sftp-server:
+  host: 10.8.4.210
+  port: 22
+  username: root
+  password: agree123
+  #上传路径
+  upload-path: /home/test
+
+#afa natp服务
+natp:
+  host: 10.8.4.210
+  port: 6666
+  timeout: 10
